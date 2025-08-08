@@ -50,7 +50,7 @@ struct ContentView: View {
             }
         }//Vstack end
         if showNewTask == true {
-            NewToDoView()
+            NewToDoView(toDoItem: ToDoItem(title: "", isImportant: false))
         }
     }//body end
 }//contentview end

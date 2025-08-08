@@ -31,30 +31,40 @@ struct ContentView: View {
                         showNewTask = true
                     }
                     
-                } label: {
+                }//button ends
+                label: {
                     
                     Text("+")
                         .font(.title)
                         .fontWeight(.bold)
                     
-                }
+                }//label ends
                 
             }//HStack end
+           
             .padding()
-            Spacer()
+            Spacer()//spacing(so the title is on top)
             
             List {
-                    ForEach (toDos) { toDoItem in
+                    ForEach (toDos) {
+                        toDoItem in
+                        if toDoItem.isImportant {
+                            Text("‼️" + toDoItem.title)
+                        }else {
                             Text(toDoItem.title)
+                            }
+                        
                     }
-            }
+            }//list end
+            .listStyle(.plain)
         }//Vstack end
-        if showNewTask == true {
-            NewToDoView(toDoItem: ToDoItem(title: "", isImportant: false))
+        if showNewTask {
+            NewToDoView(showNewTask: $showNewTask, toDoItem: ToDoItem(title: "", isImportant: false))
         }
     }//body end
 }//contentview end
 
 #Preview {
     ContentView()
+        .modelContainer(for: ToDoItem.self, inMemory: true)
 }

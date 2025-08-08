@@ -12,6 +12,7 @@ import SwiftData
 
 struct NewToDoView: View {
     
+    @Binding var showNewTask: Bool
     @Bindable var toDoItem: ToDoItem
     @Environment(\.modelContext) var modelContext
     
@@ -30,7 +31,9 @@ struct NewToDoView: View {
             .padding()
             
             Button {
-
+                showNewTask = false
+                addToDo()
+                
             } label: {
                 Text("Save")
                     .font(.headline)
@@ -40,8 +43,14 @@ struct NewToDoView: View {
         }//VStack
         .padding()
     }//body
+    
+    func addToDo() {
+        let toDo = ToDoItem(title: toDoItem.title, isImportant: toDoItem.isImportant)
+        
+        modelContext.insert(toDo)
+    }
 }//view
 
 #Preview {
-    NewToDoView(toDoItem: ToDoItem(title: "", isImportant: false))
+    NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false))
 }
